@@ -27,10 +27,11 @@ class PostsController < ApplicationController
 
 	def update
 		@post = Post.find(params[:id])
-	end	if @post.save
+		if @post.save
 			redirect_to posts_path, :notcie =>"Successfully edited!"
 		else
 			render "edit"
+	end	
 
 	def destroy
 	end
