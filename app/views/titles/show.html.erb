@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Content:</b>
+  <%= @title.content %>
+</p>
+
+<p>
+  <b>Post time:</b>
+  <%= @title.post_time %>
+</p>
+
+
+<%= link_to 'Edit', edit_title_path(@title) %> |
+<%= link_to 'Back', titles_path %>
