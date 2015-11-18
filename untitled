@@ -1,0 +1,75 @@
+require 'rails_helper' 
+
+	RSpec.describe Post, type: :controller do 
+	describe "GET #index" do
+			it "has a 200 status code" do
+	      get :index
+	      expect(response.status).to eq(200)
+	    end
+
+	    it "renders the index template"  do
+	      get :index
+	      expect(response).to render_template("index")
+	      expect(response.body).to eq ""
+	    end
+
+	    it "renders the posts/index template"  do
+	      get :index
+	      expect(response).to  render_template("posts/index")
+	      expect(response.body).to eq ""
+	    end
+
+	    it "not renders the 'new' template"  do
+	      get :index
+	      expect(response).not_to  render_template("new")
+	    end
+	end 
+
+
+	describe "GET #new" do
+			it "assigns a new Post to @post" do
+	      get :new
+	      expect(assigns(:post)).to  be_a_new(Post)
+	   		 end
+
+	    it "renders the :new template" do
+	      get :new
+	      expect(response).to render_template :new
+	    end
+	end 
+
+
+
+	describe "GET #create" do
+		context  "with valid attributes" do
+	      it "does save the new post in the database" do
+	        expect{
+	          post :create,
+	          post: attributes_for(:post)
+	        }.to change(Widget, :count).by(1)
+	      end
+	      it "re-renders the assigns[:widget] template" do
+	        post :create,
+	          post: attributes_for(:post)
+	        expect(response).to redirect_to widget_path(assigns[:post])
+	      end
+		end 
+	end
+
+	describe "GET #destroy" do
+		before :each do
+        @post = create(:post)
+      end
+
+      it "delete the post" do
+        expect{
+          delete :destroy, id: @post
+        }.to change(Widget, :count).by(-1)
+      end
+
+      it "redirect to post#index" do
+        delete :destroy, id: @post
+        expect(response).to redirect_to posts_path
+      end
+	end 
+end
